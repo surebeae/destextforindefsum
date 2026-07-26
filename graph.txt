@@ -1,0 +1,70 @@
+This graph accompanies the Wikipedia article on indefinite sums. It implements the analytic continuation method of Candelpergher (2017) for visualizing Nørlund's principal solution. For educational use; companion to the article's cited sources. f(x) can be changed live.
+
+N=444
+
+Check for poles, branch points, branch cuts on f(x) in this region. It also must have exponential type less than 2π in the imaginary direction in this region.
+
+h\le x\le h+s\left\{-14\le y\le14\right\}
+
+h=0.1
+
+Step size
+
+s=1
+
+f\left(x\right)=\frac{1}{x}
+
+\sum_{k=1}^{\frac{x}{s}}f\left(sk\right)
+
+t=\frac{x-h}{s}
+
+u\left(x\right)=f\left(sx+h\right)
+
+f_{rac}\left(x\right)=x-\operatorname{floor}\left(x\right)
+
+S\left(t\right)=t-\operatorname{floor}\left(t\right)
+
+H(t)=\left\{t\ge0:1,0\right\}
+
+\operatorname{real}\left(\operatorname{total}\left(u\left(t-\left[0...\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(t\right)+F_{fast}\left(S\left(t\right)-1\right)+u\left(S\left(t\right)\right)H\left(-t\right)-\operatorname{total}\left(u\left(t+\left[1...-\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(-t\right)-C\right)
+
+\operatorname{imag}\left(\operatorname{total}\left(u\left(t-\left[0...\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(t\right)+F_{fast}\left(S\left(t\right)-1\right)+u\left(S\left(t\right)\right)H\left(-t\right)-\operatorname{total}\left(u\left(t+\left[1...-\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(-t\right)-C\right)
+
+You may need to set C manually on edge cases
+
+C_{orig}=K\left(-0.0000000001\right)
+
+C=\left\{\left|\operatorname{real}\left(C_{orig}\right)\right|>10^{4}:K\left(-1.0000000001\right),C_{orig}\right\}
+
+conf
+
+K\left(x\right)=\left(\operatorname{total}\left(u\left(t-\left[0...\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(t\right)+F_{fast}\left(S\left(t\right)-1\right)+u\left(S\left(t\right)\right)H\left(-t\right)-\operatorname{total}\left(u\left(t+\left[1...-\operatorname{floor}\left(t\right)\right]\right)\right)\cdot H\left(-t\right)\right)
+
+C_{old}=\left\{h\ge0:F_{fast}\left(f_{rac}\left(-h\right)-1\right)+u\left(f_{rac}\left(-h\right)\right)-\sum_{n=1}^{-\operatorname{floor}\left(-h\right)}u\left(-h+n\right),h<0:F_{fast}\left(f_{rac}\left(-h\right)-1\right)+\sum_{n=0}^{\operatorname{floor}\left(-h\right)}u\left(-h-n\right)\right\}
+
+\left(\sum_{n=0}^{\operatorname{floor}\left(t\right)}u\left(t-n\right)+F_{fast}\left(f_{rac}\left(t\right)-1\right)-C\right)\left\{-1<\operatorname{real}\left(t\right)\right\}
+
+\left(F_{fast}\left(f_{rac}\left(t\right)-1\right)+u\left(f_{rac}\left(t\right)\right)-\sum_{n=1}^{-\operatorname{floor}\left(t\right)}u\left(t+n\right)-C\right)\left\{0>\operatorname{real}\left(t\right)\right\}
+
+\sum_{n=0}^{\operatorname{floor}\left(t\right)}u\left(t-n\right)\cdot H\left(t\right)+F_{fast}\left(S\left(t\right)-1\right)+u\left(S\left(t\right)\right)H\left(-t\right)-\sum_{n=1}^{-\operatorname{floor}\left(t\right)}u\left(t+n\right)H\left(-t\right)-C
+
+F_{base}\left(x\right)=\int_{1}^{x+1}u\left(o\right)do+\frac{u\left(1\right)-u\left(x+1\right)}{2}+i\int_{0}^{14}\frac{\left(u\left(x+1-io\right)-u\left(1-io\right)\right)-\left(u\left(x+1+io\right)-u\left(1+io\right)\right)}{e^{2\pi o}-1}do
+
+L=\left[0...N-1\right]
+
+x_{1}=\frac{1}{N-1}L-1
+
+y_{1}=F_{base}\left(x_{1}\right)
+
+g\left(x\right)=\max\left(1,\min\left(N-1,\operatorname{floor}\left(\left(x+1\right)\cdot\left(N-1\right)\right)+1\right)\right)
+
+F_{fast}\left(x\right)=y_{1}\left[g\left(x\right)\right]+\frac{\left(y_{1}\left[g\left(x\right)+1\right]-y_{1}\left[g\left(x\right)\right]\right)}{\left(x_{1}\left[g\left(x\right)+1\right]-x_{1}\left[g\left(x\right)\right]\right)}\cdot\left(x-x_{1}\left[g\left(x\right)\right]\right)
+
+p_{ink}=\operatorname{rgb}\left(19,97,97\right)
+
+y_{ellow}=\operatorname{rgb}\left(0,0,57\right)
+
+https://radian628.github.io/unofficial-desmos-wiki/misc/floating-point-numbers/
+Desmos isn't very precise anyways, so we truncate the integral as for most functions e^2*pi*t will converge extremely fast regardless for the interval of interest
+
+end of conf (closed by default)
